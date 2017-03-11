@@ -21,6 +21,7 @@
 
 	chosen {
 		stdout-path = &serial_0;
+		bootargs = "root=/dev/ram0 rw rootfstype=exy4 consolt=ttySAC0,115200 init=/linuxrc earlyprintk";
 	};
 
 	memory {
@@ -78,7 +79,7 @@
 	bus-width = <4>;
 	pinctrl-0 = <&sd2_clk &sd2_cmd &sd2_cd &sd2_bus4>;
 	pinctrl-names = "default";
-	status = "okay";
+	status = "disable";
 };
 
 &serial_0 {
