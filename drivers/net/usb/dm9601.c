@@ -61,7 +61,7 @@
 /* setup ethernet address */
 static u8 param_addr[ETH_ALEN];
 
-static init __init dm9601_set_mac(char *str)
+static int __init dm9601_set_mac(char *str)
 {
 	u8 addr[ETH_ALEN];
         uint val;

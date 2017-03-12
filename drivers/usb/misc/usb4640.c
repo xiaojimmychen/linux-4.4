@@ -10,7 +10,7 @@ struct usb4640 {
 	enum usb4640_mode mode;
 	struct device *dev;
 	int gpio_reset;
-}
+};
 
 static int usb4640_reset(struct usb4640 *hub, int state)
 {
@@ -81,8 +81,8 @@ static int usb4640_probe(struct usb4640 *hub)
 		hub->mode = mode;
 	}
 
-	if (gpio_is_vaild(hub->gpio_reset)){
-		err = devm_gpio_reset_one(dev, hub->gpio_reset, GPIOF_OUT_INIT_LOW, "usb4640_reset");
+	if (gpio_is_valid(hub->gpio_reset)){
+		err = devm_gpio_request_one(dev, hub->gpio_reset, GPIOF_OUT_INIT_LOW, "usb4640_reset");
 		if (err){
 			dev_err(dev, "unable to request GPIO %d as reset pin (%d)\n", hub->gpio_reset, err);
 			return err;
@@ -96,13 +96,13 @@ static int usb4640_probe(struct usb4640 *hub)
 	return 0;
 }
 
-static int usb4640_platform_probe(struct paltform_device *pdev)
+static int usb4640_platform_probe(struct platform_device *pdev)
 {
 	struct usb4640 *hub;
 
-	hub = devm_kzalloc(pdev->dev, sizeof(struct usb4640), GFP_KERNEL);
+	hub = devm_kzalloc(&pdev->dev, sizeof(struct usb4640), GFP_KERNEL);
 	if (!hub) {
-		return -ENOMEN;
+		return -ENOMEM;
 	}
 
 	hub->dev = &pdev->dev;
@@ -131,7 +131,7 @@ static const struct of_device_id usb4640_of_match[] = {
  {
  	int err;
 
- 	err = platform_driver_register(usb4640_platform_driver);
+ 	err = platform_driver_register(&usb4640_platform_driver);
  	if (err != 0){
  		pr_err("usb4640: Failed to register platform driver: %d\n", err);
  	}
@@ -143,7 +143,7 @@ static const struct of_device_id usb4640_of_match[] = {
 
  static void __exit usb4640_exit(void)
  {
- 	platform_driveer_unregister(&usb4640_platform_driver);
+ 	platform_driver_unregister(&usb4640_platform_driver);
  }
 
  module_exit(usb4640_exit);

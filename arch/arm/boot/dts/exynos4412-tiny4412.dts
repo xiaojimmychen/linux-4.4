@@ -14,6 +14,7 @@
 /dts-v1/;
 #include "exynos4412.dtsi"
 #include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/usb4640/usb4640.h>
 
 / {
 	model = "FriendlyARM TINY4412 board based on Exynos4412";
@@ -21,7 +22,7 @@
 
 	chosen {
 		stdout-path = &serial_0;
-		bootargs = "root=/dev/ram0 rw rootfstype=exy4 consolt=ttySAC0,115200 init=/linuxrc earlyprintk";
+		bootargs = "root=/dev/ram0 rw rootfstype=ext4 console=ttySAC0,115200 ethmac=13:14:52:52:51:7F init=/linuxrc earlyprintk";
 	};
 
 	memory {

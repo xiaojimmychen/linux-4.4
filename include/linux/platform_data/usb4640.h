@@ -12,6 +12,6 @@ enum usb4640_mode {
 struct usb4640_platform_data {
 	enum usb4640_mode initial_mode;
 	int gpio_reset;
-}
+};
 
 #endif
