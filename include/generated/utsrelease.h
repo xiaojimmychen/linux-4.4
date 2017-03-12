@@ -1,1 +1,1 @@
-#define UTS_RELEASE "4.4.0-00003-g38eeb0b-dirty"
+#define UTS_RELEASE "4.4.0-00004-gfd2437c-dirty"
