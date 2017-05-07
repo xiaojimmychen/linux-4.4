@@ -31,6 +31,7 @@
 
 	leds {
 		compatible = "gpio-leds";
+		status = "disable";
 
 		led1 {
 			label = "led1";
@@ -91,6 +92,114 @@
     	};
     };
 
+    interrupt_demo: interrupt_demo {
+            compatible         = "tiny4412,interrupt_demo";
+            tiny4412,int_gpio1 = <&gpx3 2 GPIO_ACTIVE_HIGH>;
+            tiny4412,int_gpio2 = <&gpx3 3 GPIO_ACTIVE_HIGH>;
+            tiny4412,int_gpio3 = <&gpx3 4 GPIO_ACTIVE_HIGH>;
+            tiny4412,int_gpio4 = <&gpx3 5 GPIO_ACTIVE_HIGH>;
+    };
+
+    adc_demo@126C0000 {
+		compatible	= "tiny4412,adc_demo";
+		reg = <0x126C 0x20>;
+		clocks = <&clock CLK_TSADC>;
+		clock-names = "timers";
+		interrupt-parent = <&combiner>;
+		interrupts = <10 3>;
+    };
+
+    led_pin {
+		compatible	= "tiny4412,led_demo";
+		pinctrl-names = "led_demo";
+		pinctrl-0 = <&led_demo>;
+		tiny4412,int_gpio1 = <&gpm4 0 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio2 = <&gpm4 1 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio3 = <&gpm4 2 GPIO_ACTIVE_HIGH>;
+		tiny4412,int_gpio4 = <&gpm4 3 GPIO_ACTIVE_HIGH>;
+	};
+
+	pwm_demo@139D0000 {
+		compatible	= "tiny4412,pwm_demo";
+		reg = <0x139D0000 0x14>;
+		pinctrl-names = "pwm-pin";
+		pinctrl-0 = <&pwm_pin>;
+		clock-names = "timers";
+	};
+
+	wdt_demo@10060000 {
+		compatible = "tiny4412,wdt_demo";
+		reg = <0x10060000 0x100>;
+		interrupts = <0 43 0>;
+		clocks = <&clock CLK_WDT>;
+		clock-names = "watchdog";
+	};
+
+	backlight_demo@139D0000 {
+		compatible = "tiny4412,backlight_demo";
+		reg = <0x139D0000 0x14>;
+		tiny4412,backlight = <&gpx1 2 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "backlight_out","backlight_in";
+		pinctrl-0 = <&backlight_out>;
+		pinctrl-1 = <&backlight_in>;
+		interrupts = <0 40 0>;
+		clocks = <&clock CLK_PWM>;
+		clock-names = "timers";
+	};
+
+	lcd_demo@11C00000 {
+		compatible = "tiny4412,lcd_demo";
+		reg = <0x11C00000 0x20c0 0x10010210 0x08 0x10023c80 0x04 0x1003c000 0x1000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&lcd_demo>;
+	};
+
+	touch_demo {
+		compatible = "tiny4412,touch_demo";
+		interrupts = <6 0>;
+		interrupt-parent = <&gpx1>;
+		status = "okay";
+	};
+
+};
+
+&pinctrl_0 {
+        lcd_demo: lcd{
+                samsung,pins = "gpf0-0", "gpf0-1", "gpf0-2", "gpf0-3", "gpf0-4", "gpf0-5", "gpf0-6","gpf0-7", "gpf1-0", "gpf1-1", "gpf1-2", "gpf1-3", "gpf1-4", "gpf1-5", "gpf1-6","gpf1-7", "gpf2-0", "gpf2-1", "gpf2-2", "gpf2-3", "gpf2-4", "gpf2-5", "gpf2-6","gpf2-7", "gpf3-0", "gpf3-1", "gpf3-2", "gpf3-3";
+                samsung,pin-function = <0x2>;
+                samsung,pin-pud = <0x0>;
+                samsung,pin-drv = <0x0>;
+        };
+};
+
+&pinctrl_1{
+	led_demo: led{
+		samsung,pins = "gpm4-0", "gpm4-1", "gpm4-2", "gpm4-3";
+		samsung,pin-function = <0x1>;
+		samsung,pin-pud = <0x0>;
+		samsung,pin-drv = <0x0>;
+	};
+
+	backlight_out: backlight_out {
+		samsung,pins = "gpx1-2";
+		samsung,pin-function = <0x1>;
+		samsung,pin-pud = <0x0>;
+		samsung,pin-drv = <0x0>;
+	};
+
+	backlight_in: backlight_in {
+		samsung,pins = "gpx1-2";
+		samsung,pin-function = <0x0>;
+		samsung,pin-pud = <0x0>;
+		samsung,pin-drv = <0x0>;
+	};
+
+	pwm_pin: pwm_pin {
+		samsung,pins = "gpd0-0";
+		samsung,pin-function = <2>;
+		samsung,pin-pud = <0>;
+		samsung,pin-drv=<0>;
+	};
 };
 
 &rtc {
@@ -120,6 +229,34 @@
 	status = "okay";
 	bus-width = <8>;
 	cap-mmc-highspeed;
+};
+
+&i2c_0 {
+	eeprom@50 {
+		compatible = "tiny4412,eeprom";
+		reg = <0x50>;
+	};
+};
+
+&i2c_1 {
+	status = "okay";
+	touch@38{
+		compatible = "tiny4412,touch";
+		reg = <0x38>;
+	};
+};
+
+&spi_0 {
+	status = "okay"	;
+	cs-gpios = <&gpb 1 GPIO_ACTIVE_HIGH>;
+	spi_flash@0 {
+		compatible = "tiny4412,spi_flash";
+		spi-max-frequency = <10000000>;
+		reg = <0>;
+		controller-data {
+			samsung,spi-feedback-delay = <0>;
+		};
+	};
 };
 
 &serial_0 {
