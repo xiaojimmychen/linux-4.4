@@ -107,6 +107,7 @@ deps_config := \
 	drivers/firmware/google/Kconfig \
 	drivers/firmware/broadcom/Kconfig \
 	drivers/firmware/Kconfig \
+	drivers/tiny4412/Kconfig \
 	drivers/fpga/Kconfig \
 	drivers/hwtracing/intel_th/Kconfig \
 	drivers/hwtracing/stm/Kconfig \

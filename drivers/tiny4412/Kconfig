@@ -1,0 +1,68 @@
+
+#
+# tiny4412 device driver configuration
+#
+
+menuconfig TINY4412_DRIVER
+	bool "TINY4412 Driver Support"
+	default y
+	---help---
+	  If you say Y here, it will build the driver for tiny4412.
+
+if TINY4412_DRIVER
+
+config TINY4412_ADC
+	bool "TINY4412 ADC Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the adc driver for tiny4412.
+
+config TINY4412_BACKLIGHT
+	bool "TINY4412 BACKLIGHT Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the backlight driver for tiny4412.
+
+config TINY4412_EEPROM
+	bool "TINY4412 EEPROM Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the eeprom driver for tiny4412.
+
+config TINY4412_INTERRUPT
+	bool "TINY4412 INTERRUPT Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the interrup driver for tiny4412.
+
+config TINY4412_LCD
+	bool "TINY4412 LCD Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the lcd driver for tiny4412.
+
+config TINY4412_LED
+	bool "TINY4412 LED Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the led driver for tiny4412.
+
+config TINY4412_PWM
+	bool "TINY4412 PWM Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the pwm driver for tiny4412.
+
+config TINY4412_TOUCH
+	bool "TINY4412 TOUCH Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the touch driver for tiny4412.
+
+config TINY4412_WDT
+	bool "TINY4412 WDT Driver"
+	default y
+	---help---
+	  If you say Y here, it will build the wdt driver for tiny4412.
+
+endif # TINY4412_DRIVER

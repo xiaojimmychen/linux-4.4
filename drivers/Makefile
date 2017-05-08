@@ -7,6 +7,7 @@
 
 obj-y				+= irqchip/
 obj-y				+= bus/
+obj-$(CONFIG_TINY4412_DRIVER)		+= tiny4412/
 
 obj-$(CONFIG_GENERIC_PHY)	+= phy/
 
